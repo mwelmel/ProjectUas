@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\Admin;
 
@@ -31,14 +31,41 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => ['required', 'unique:categories'],
+            'name'  => ['required', 'unique:categories'],
         ]);
 
         Category::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
+            'name'  => $request->name,
+            'slug'  => Str::slug($request->name),
         ]);
 
         return redirect()->route('admin.categories.index')->with('success', 'Category Created');
+    }
+
+    public function edit(Category $category)
+    {
+        return view('admin.categories.edit', compact('category'));
+    }
+
+    public function update(Request $request, Category $category)
+    {
+        $this->validate($request, [
+            'name'  => ['required', 'unique:categories'],
+        ]);
+
+        $category->update([
+            'name'  => $request->name,
+            'slug'  => Str::slug($request->name),
+        ]);
+
+        return redirect()->route('admin.categories.index')->with('success', 'Category Updated');
+    }
+
+
+    public function destroy(Category $category)
+    {
+        $category->delete();
+
+        return redirect()->route('admin.categories.index')->with('success', 'Category Deleted');
     }
 }
