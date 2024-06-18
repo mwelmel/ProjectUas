@@ -3,39 +3,28 @@
 namespace App\Http\Livewire\Notifications;
 
 use Livewire\Component;
-use Livewire\WithPagination;
-use App\Policies\NotificationPolicy;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Notifications\DatabaseNotification;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class Index extends Component
+class Count extends Component
 {
-    use AuthorizesRequests;
-    use WithPagination;
+    public $count;
 
-    public $notificationId;
+    protected $listeners = [
+        'markedAsRead' => 'updateCount',
+    ];
 
-    public function render()
+    public function render(): View
     {
-        return view('livewire.notifications.index', [
-            'notifications' => Auth::user()->unreadNotifications()->paginate(10),
+        $this->count = Auth::user()->unreadNotifications()->count();
+
+        return view('livewire.notications.count', [
+            'count' => $this->count,
         ]);
     }
 
-    public function getNotificationProperty(); DatabaseNotification
+    public function updateCount(int $count): int
     {
-        return DatabaseNotification: :findOrFail($this->notificationId);
-    }
-
-    public function markAsRead(string $notificationId): void
-    {
-        $this->notificationId = $notificationId;
-
-        $this->authorize(NotificationPolicy: :MARK_AS_READ, $this->notification);
-
-        $this->notification->markAsRead();
-
-        $this->emit('markedAsRead', Auth::user()->unreadNotifications()->count());
+        return $count;
     }
 }
