@@ -45,6 +45,7 @@ Route::group(['prefix' => 'threads', 'as' => 'threads.'], function () {
     });
 });
 
+<<<<<<< HEAD
 Route::group(['prefix' => 'replies', 'as' => 'replies.'], function () {
     /* Name: Replies
      * Url: /replies/*
@@ -78,3 +79,8 @@ Route::get('/dashboard/categories/create', [PageController::class, 'categoriesCr
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+=======
+Route::get('/apalo', function () {
+    echo 'biawak terbang';
+});
+>>>>>>> 32d63e18a82102cb7e4ff7a244da834458e89953
