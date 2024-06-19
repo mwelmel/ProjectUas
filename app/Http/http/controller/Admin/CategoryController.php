@@ -11,6 +11,7 @@ use App\Http\Middleware\Authenticate;
 
 class CategoryController extends Controller
 {
+    
     public function __construct()
     {
         return $this->middleware([IsAdmin::class, Authenticate::class]);
@@ -28,7 +29,8 @@ class CategoryController extends Controller
         return view('admin.categories.create');
     }
 
-    public function store(Request $request)
+    // metode untuk memanggil fungsi store
+    public function store(Request $request) 
     {
         $this->validate($request, [
             'name'  => ['required', 'unique:categories'],
