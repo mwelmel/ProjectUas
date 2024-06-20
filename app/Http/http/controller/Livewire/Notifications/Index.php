@@ -34,7 +34,7 @@ class Index extends Component
 
         $this->authorize(NotificationPolicy::MARK_AS_READ, $this->notications);
 
-        $this->notification->narkAsRead();
+        $this->notification->markAsRead();
 
         $this->emit('markedAsRead', Auth::user()->unreadNotifications()->count());
     }
