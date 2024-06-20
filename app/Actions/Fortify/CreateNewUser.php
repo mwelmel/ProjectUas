@@ -11,12 +11,9 @@ use Laravel\Fortify\Contracts\CreateNewUsers;
 
 class CreateNewUser implements CreateNewUsers
 {
-    /**
-     * Validate and create a newly registered user.
-     *
-     * @param array $input
-     * @return \App\Models\User
-     */
+    use PasswordValidationRules;
+    
+    // Validate and create a newly registered user.
     public function create(array $input)
     {
         Validator::make($input, [
@@ -32,8 +29,7 @@ class CreateNewUser implements CreateNewUsers
             'username'  => $input['username'],
             'slug'      => Str::slug($input['name']),
             'email'     => $input['email'],
-            'password'  => Hash::make($input['password']),
+            'password'  => Hash::make($input['password'])
         ]);
     }
-
 }
