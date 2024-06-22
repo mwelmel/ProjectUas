@@ -39,10 +39,23 @@ class ThreadStoreRequest extends FormRequest
     }
 
     public function title(): string 
-    {}
+    {
+        return $this->get('title');
+    }
 
+    public function body(): string 
+    {
+        return $this->get('body');
+    }
 
+    public function category(): string 
+    {
+        return $this->get('category');
+    }
 
-
+    public function tags(): array 
+    {
+        return $this->get('tags', []);
+    }
     
 }
