@@ -8,7 +8,7 @@ use App\Models\ReplyAble;
 use App\Events\ReplyWasCreated;
 use App\Http\Requests\CreateReplyRequest;
 
-class CreateReplyRequest
+class CreateReply
 {
     private $body;
     private $author;
@@ -28,5 +28,20 @@ class CreateReplyRequest
             $request->author(),
             $request->replyAble(),
         );
+    }
+
+    public function handle(): Reply
+    {
+        $reply = new Reply([
+            'body' => $this->body
+        ]);
+
+        $reply->authoredBy($this->author);
+        $reply->to($this->replyAble);
+        $reply->save();
+
+        event(new ReplyWasCreated($reply));
+
+        return $reply;
     }
 }
