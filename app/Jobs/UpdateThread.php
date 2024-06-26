@@ -35,5 +35,32 @@ class UpdateThread implements ShouldQueue
         ]);
      }
 
-     
+     public static function fromRequest(Thread $thread, ThreadStoreRequest $request): self
+     {
+        return new static($thread, [
+            'title'         => $request->title(),
+            'body'          => Purifier::clean($request->body()),
+            'category_id'   => $request->category(),
+            'slug'          => Str::slug($request->title()),
+            'tags'          => $request->tags(),
+        ]);
+     }
+
+     /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        $this->thread->update($this->attributes);
+
+        if (Arr::has($this->attributes, 'tags')) {
+            $this->thread->syncTags($this->attributes['tags']);
+        }
+
+        $this->thread->save();
+
+        return $this->thread;
+    }
 }
