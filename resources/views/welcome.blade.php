@@ -170,3 +170,4 @@
         </div>
     </body>
 </html>
+<x-heroicon-o-chat class="w-6 h-6" />

@@ -43,6 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail, PointAble
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'bio',
