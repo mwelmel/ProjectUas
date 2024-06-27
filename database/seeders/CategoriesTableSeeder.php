@@ -59,6 +59,6 @@ class CategoriesTableSeeder extends Seeder
                 'created_at'    => Carbonn::now(),
                 'updated_at'    => Carbon::now(),
             ],
-        ])
+        ]);
      }
 }
