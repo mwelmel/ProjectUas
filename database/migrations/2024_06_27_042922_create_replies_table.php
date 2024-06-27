@@ -18,7 +18,7 @@ class CreateRepliesTable extends Migration
             $table->text('body');
             $table->integer('replyable_id');
             $table->string('replyable_type')->default('');
-            $table->foreignId('author_id')->constrained('users');
+            //$table->foreignId('author_id')->constrained('users');
             $table->timestamps();
         });
     }

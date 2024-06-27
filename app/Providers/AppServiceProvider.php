@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use ViewContract;
 use App\Models\User;
 use App\Models\View;
 use App\Models\Reply;
@@ -11,6 +10,9 @@ use App\Models\Thread;
 use App\Contracts\ViewsContract;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Blade;
+use App\View\Components\HeroiconSChat; // Tambahkan ini untuk import component
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,8 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Perbaikan: Sesuaikan binding dengan benar
         $this->app->bind(ViewsContract::class, Views::class);
-
         $this->app->bind(ViewContract::class, View::class);
     }
 
@@ -34,8 +36,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->bootEloquentMorphsRelations();
+        
+        // Perbaikan: Registrasi Blade component dengan nama yang benar
+        Blade::component('heroicon-s-chat', HeroiconSChat::class);
     }
 
+    /**
+     * Boot Eloquent morphs relations.
+     *
+     * @return void
+     */
     public function bootEloquentMorphsRelations()
     {
         Relation::morphMap([
